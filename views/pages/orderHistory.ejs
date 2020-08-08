@@ -1,0 +1,41 @@
+
+    
+ 
+    <div class="container">
+      <h3 class="display-4">List of Orders</h3>
+    <form  class="d-flex align-items-center flex-nowrap" >
+      <input type="hidden" id="date" name="date" >
+    </form>
+    
+    <table class="table table-striped xtable-hover" style="margin-top: 50px;" id="myTable">
+        <thead class="thead-dark">
+            <tr>
+                <th onclick=" sortTable(0)">product Id <i class="fa fa-sort" aria-hidden="true"></i></th>
+                <th onclick="sortTable(1)">Seller Id</th>
+                <th>Order Qty</th>
+                <th>Destination Address</th>
+                <th>Total Price Payable</th>
+             
+            </tr>
+        </thead>
+        <tbody>
+          <% if (Array.isArray(orders)) { %>
+            <% orders.forEach(function(order) {  %>
+              <tr>
+                  <td><%= order.product_id %></td>
+                  <td><%= order.seller_id %></td>
+                  <td><%= order.order_qty %></td>
+                  <td><%= order.user_address %></td>
+                  <td><%= order.order_total %></td>
+              </tr>
+             <%
+       })%>
+          <% } else { %>
+            <div style="margin-top: 50px;" class=" alert alert-danger" role="alert">
+             No Orders
+            </div>
+          <% } %>
+        </tbody>
+    </table>
+    
+    </div>

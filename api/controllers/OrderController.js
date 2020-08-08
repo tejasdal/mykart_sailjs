@@ -20,14 +20,17 @@ async function placeOrder(order, res) {
     }
 }
 
-async function fetchOrderHistory( res) {
+async function fetchOrderHistory(req,res) {
 
     console.log('Fetching order history.');
     try {
-        let response = await axios.get(MY_KART_BACKEND_URL + '/orders');
+        let response = await axios.post('http://localhost:3000/orderHistory',
+        {
+            "user_id":req.query.user_id
+        });
         if (response.status === 200) {
-
-            res.view('orderHistory', { orders: response.data});
+                console.log(response.data)
+            res.view('pages/orderHistory', { orders: response.data});
             return;
         }
     } catch (err) {
@@ -60,10 +63,10 @@ module.exports = {
     },
 
     getOrderHistory: function(req, res) {
-
-        return fetchOrderHistory(res);
+        console.log("Inside Get Order History function");
+       console.log(req.query)
+        return fetchOrderHistory(req,res);
     },
 
-    
 };
 

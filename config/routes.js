@@ -21,7 +21,7 @@ module.exports.routes = {
 
   '/': { view: 'pages/homepage' },
   '/register': {view: 'pages/register'},
-  '/login' : {view: 'pages/login'},
+  '/login' : {view: 'pages/initialLogin'},
   'POST /user/register':'UserController.register',
   'POST /user/login':'UserController.login',
   'GET /products':'ProductController.getProducts',

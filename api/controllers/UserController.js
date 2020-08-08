@@ -6,6 +6,9 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 const axios = require('axios');
+var orderController = require('./OrderController');
+
+
 const MY_KART_BACKEND_URL = "http://localhost:3000";
 
 //Login 
@@ -17,6 +20,9 @@ async function AuthenticateUser(req, res) {
             "password": req.body.password
         });
         if (temp.status == 200) {
+            console.log(temp.data[0].id);
+            res.redirect('/orders?user_id='+temp.data[0].id);
+          //  orderController.getOrderHistory(temp.data[0].id);
             console.log("successful log in");
         }
         else
@@ -25,8 +31,13 @@ async function AuthenticateUser(req, res) {
         }
     } catch (err) {
         console.log(err.response.status);
-
+        if(err.response.status == 412)
+        {
+            sendError(res,"Please enter valid email-id and password")
+          //  console.log("Email-id exist in the data base")
+        }
         if (err.status == 404) {
+            sendError(res,"Error while Performing LOgin operation-->" + err)
             console.log("Error while Performing LOgin operation-->" + err);
         }
 
@@ -81,15 +92,19 @@ async function RegisterUser(req, res) {
            "address": req.body.address
         });
         if (temp.status == 200) {
+            let message="success "
+            res.view('pages/success',message)
             console.log("successful Registration");
         }
     } catch (err) {
      //   console.log(err.response.status);
         if (err.response.status == 404) {
+            sendError(res,"Error while Performing Login operation-->" + err)
             console.log("Error while Performing LOgin operation-->" + err);
         }
         if(err.response.status == 412)
         {
+            sendError(res,"Email-id exist in the data base")
             console.log("Email-id exist in the data base")
         }
         return undefined;
