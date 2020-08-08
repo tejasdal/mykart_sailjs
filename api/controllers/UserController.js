@@ -1,3 +1,4 @@
+
 /**
  * UserController
  *
@@ -5,7 +6,7 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 const axios = require('axios');
-
+const MY_KART_BACKEND_URL = "http://localhost:3000";
 
 //Login 
 async function AuthenticateUser(req, res) {
@@ -29,6 +30,42 @@ async function AuthenticateUser(req, res) {
             console.log("Error while Performing LOgin operation-->" + err);
         }
 
+        return undefined;
+    }
+}
+
+// Login and proceed for order.
+//Login 
+async function loginAndProceedForOrder(req, res) {
+    try {
+        let order = {
+            userId: req.body.userId,
+            sellerId: req.body.sellerId,
+            orderQty: req.body.orderQty,
+            productId: req.body.productId,
+            userAdd: req.body.userAdd,
+            orderTotal: req.body.orderTotal,
+        };
+        
+        let temp = await axios.post(MY_KART_BACKEND_URL, {
+            "emailid": req.body.email,
+            "password": req.body.password
+        });
+        if (temp.status == 200) {
+            let user = temp.data[0];
+            order.userId = user.id;
+            order.userAdd = user.address;
+
+            res.view('pages/proceedOrder', {
+                order: order
+            });
+        }
+    } catch (err) {
+        console.log("Error while login: " + err);
+        res.view('pages/login', {
+            errorMessage: true,
+            order: order
+        });
         return undefined;
     }
 }
@@ -59,6 +96,12 @@ async function RegisterUser(req, res) {
     }
 }
 
+function sendError(res, message) {
+    res.view('pages/error', {
+        message: message
+    });
+}
+
 
 
 module.exports = {
@@ -75,14 +118,32 @@ module.exports = {
 
     login: function (req, res) {
         AuthenticateUser(req, res)
+
         // var emailid = req.body.email;
         // var password = req.body.password;
         // console.log("Logged in user's email-id is--->" + emailid);
         // res.view('pages/login');
     }
+,
+    loginPage:function(req,res)
+    {
+        console.log("Redirect to login page to authenticate user.");
+        console.log(req.body);
+        let order = {
+            sellerId: req.body.sellerId,
+            orderQty: req.body.orderQty,
+            productId: req.body.productId,
+            orderTotal: req.body.orderTotal,
+        }
+        order.orderTotal = order.orderTotal * order.orderQty;
+        res.view('pages/login',{
+            order: order
+        });
+    },
+    orderLogin:function(req,res)
+    {
 
-
-
-
+        return loginAndProceedForOrder(req, res);
+    },
 };
 

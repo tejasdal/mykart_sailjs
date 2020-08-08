@@ -27,6 +27,9 @@ module.exports.routes = {
   'GET /products':'ProductController.getProducts',
   'POST /order':'OrderController.newOrder',
   'GET /orders':'OrderController.getOrderHistory',
+  'POST /order/auth':'UserController.loginPage',
+  'POST /order/auth/login':'UserController.orderLogin',
+  
 
   /***************************************************************************
   *                                                                          *
