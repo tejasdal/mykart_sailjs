@@ -30,17 +30,18 @@ async function AuthenticateUser(req, res) {
 // Login and proceed for order.
 //Login 
 async function loginAndProceedForOrder(req, res) {
+    let order = {
+        userId: req.body.userId,
+        sellerId: req.body.sellerId,
+        orderQty: req.body.orderQty,
+        productId: req.body.productId,
+        userAdd: req.body.userAdd,
+        orderTotal: req.body.orderTotal,
+    };
+
     try {
-        let order = {
-            userId: req.body.userId,
-            sellerId: req.body.sellerId,
-            orderQty: req.body.orderQty,
-            productId: req.body.productId,
-            userAdd: req.body.userAdd,
-            orderTotal: req.body.orderTotal,
-        };
-        
-        let temp = await axios.post(MY_KART_BACKEND_URL, {
+           
+        let temp = await axios.post(MY_KART_BACKEND_URL+ '/login', {
             "emailid": req.body.email,
             "password": req.body.password
         });
