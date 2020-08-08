@@ -35,7 +35,6 @@ async function AuthenticateUser(req, res) {
 }
 
 // Login and proceed for order.
-//Login 
 async function loginAndProceedForOrder(req, res) {
     let order = {
         userId: req.body.userId,
