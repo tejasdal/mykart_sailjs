@@ -9,15 +9,22 @@ const axios = require('axios');
 
 //Login 
 async function AuthenticateUser(req, res) {
+    console.log("inside function")
     try {
-        let temp = await axios.post(URL_TO_BE_UPDATE, {
+        let temp = await axios.post('http://localhost:3000/login', {
             "emailid": req.body.email,
             "password": req.body.password
         });
         if (temp.status == 200) {
             console.log("successful log in");
         }
+        else
+        {           
+            console.log("wrong");
+        }
     } catch (err) {
+        console.log(err.response.status);
+
         if (err.status == 404) {
             console.log("Error while Performing LOgin operation-->" + err);
         }
@@ -30,7 +37,7 @@ async function AuthenticateUser(req, res) {
 //Registration 
 async function RegisterUser(req, res) {
     try {
-        let temp = await axios.post(URL_TO_BE_UPDATE, {
+        let temp = await axios.post('http://localhost:3000/register', {
             "emailid": req.body.email,
             "password": req.body.password,
           "username": req.body.name,
@@ -40,10 +47,11 @@ async function RegisterUser(req, res) {
             console.log("successful Registration");
         }
     } catch (err) {
-        if (err.status == 404) {
+     //   console.log(err.response.status);
+        if (err.response.status == 404) {
             console.log("Error while Performing LOgin operation-->" + err);
         }
-        if(err.status == 512)
+        if(err.response.status == 412)
         {
             console.log("Email-id exist in the data base")
         }
@@ -56,20 +64,21 @@ async function RegisterUser(req, res) {
 module.exports = {
 
     register: function (req, res) {
-        var username = req.body.name;
-        var emailid = req.body.email;
-        var password = req.body.password;
-        var address = req.body.address;
-        console.log("Registered  user's email-id is--->" + emailid);
-        res.view('pages/register');
+        RegisterUser(req,res);
+      //  var username = req.body.name;
+        // var emailid = req.body.email;
+        // var password = req.body.password;
+        // var address = req.body.address;
+        // console.log("Registered  user's email-id is--->" + emailid);
+        // res.view('pages/register');
     },
 
     login: function (req, res) {
         AuthenticateUser(req, res)
-        var emailid = req.body.email;
-        var password = req.body.password;
-        console.log("Logged in user's email-id is--->" + emailid);
-        res.view('pages/login');
+        // var emailid = req.body.email;
+        // var password = req.body.password;
+        // console.log("Logged in user's email-id is--->" + emailid);
+        // res.view('pages/login');
     }
 
 
