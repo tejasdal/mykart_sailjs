@@ -10,7 +10,8 @@ async function placeOrder(order, res) {
         let response = await axios.post(MY_KART_BACKEND_URL + '/order', order);
         if (response.status === 200) {
 
-            res.redirect('/orders');
+            // res.redirect('/orders');
+            res.redirect('/orders?user_id='+order.userId);
             return;
         }
     } catch (err) {
