@@ -24,7 +24,9 @@ module.exports.routes = {
   '/login' : {view: 'pages/login'},
   'POST /user/register':'UserController.register',
   'POST /user/login':'UserController.login',
-
+  'GET /products':'ProductController.getProducts',
+  'POST /order':'OrderController.newOrder',
+  'GET /orders':'OrderController.getOrderHistory',
 
   /***************************************************************************
   *                                                                          *

@@ -1,0 +1,43 @@
+<div class="container">
+
+    <div class="row ">
+
+        <% products.forEach(function(product){ %>
+
+        <div class="card border-black m-4" style="width: 18rem;">
+            <img class="card-img-top" src="<%= product.product_url%>" alt="Card image cap">
+            <div class="card-body">
+                <p>Name: <%= product.product_name %></p>
+                <p>Price: $<%= product.product_price %></p>
+                <p>Quantity on Hand: <%= product.qoh %></p>
+
+                <form class="d-inline" action="/order" method="post">
+
+                    <input type="text" hidden name="userId" class="form-control" value="1">
+                    <input type="text" hidden name="sellerId" class="form-control" value="<%= product.seller_id %>">
+                    <!-- <input type="text" hidden name="orderQty" class="form-control" value="<%= product.id %>"> -->
+                    <input type="text" hidden name="productId" class="form-control" value="<%= product.product_id %>">
+                    <input type="text" hidden name="userAdd" class="form-control" value="Halifax">
+                    <input type="text" hidden name="orderTotal" class="form-control"
+                        value="<%= product.product_price  %>">
+
+                    <div class="row">
+                        <div class="col6">
+                            <input type="number" min="0" name="orderQty" value="0">
+                        </div>
+                        <div class="col6">
+                            <input type="Submit" value="Order" class="btn btn-dark">
+                        </div>
+                    </div>
+                </form>
+                <!-- <form class="d-inline" action="/products/delete/?id=<%= product.id %>" method="post"
+                    onsubmit="return confirm('Are you sure you want to delete the entry?') ">
+                    <input type="Submit" value="Delete" class="btn btn-outline-danger">
+                </form> -->
+            </div>
+        </div>
+
+        <%  }) %>
+
+    </div>
+</div>
