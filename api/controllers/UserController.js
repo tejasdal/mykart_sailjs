@@ -9,13 +9,13 @@ const axios = require('axios');
 var orderController = require('./OrderController');
 
 
-const MY_KART_BACKEND_URL = "http://localhost:3000";
+const MY_KART_BACKEND_URL = "https://q7m3gl0cj2.execute-api.us-east-1.amazonaws.com/mykart-cloud-project";
 
 //Login 
 async function AuthenticateUser(req, res) {
     console.log("inside function")
     try {
-        let temp = await axios.post('http://localhost:3000/login', {
+        let temp = await axios.post('https://q7m3gl0cj2.execute-api.us-east-1.amazonaws.com/mykart-cloud-project/login', {
             "emailid": req.body.email,
             "password": req.body.password
         });
@@ -85,7 +85,7 @@ async function loginAndProceedForOrder(req, res) {
 //Registration 
 async function RegisterUser(req, res) {
     try {
-        let temp = await axios.post('http://localhost:3000/register', {
+        let temp = await axios.post('https://q7m3gl0cj2.execute-api.us-east-1.amazonaws.com/mykart-cloud-project/register', {
             "emailid": req.body.email,
             "password": req.body.password,
           "username": req.body.name,

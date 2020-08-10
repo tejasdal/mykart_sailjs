@@ -1,7 +1,7 @@
 
 const axios = require('axios');
 
-const MY_KART_BACKEND_URL = "http://localhost:3000";
+const MY_KART_BACKEND_URL = "https://q7m3gl0cj2.execute-api.us-east-1.amazonaws.com/mykart-cloud-project";
 
 async function fetchProducts(res) {
 
