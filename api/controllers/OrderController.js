@@ -11,7 +11,8 @@ async function placeOrder(order, res) {
         if (response.status === 200) {
 
             // res.redirect('/orders');
-            res.redirect('/orders?user_id='+order.userId);
+            // res.redirect('/orders?user_id='+order.userId);
+            res.view('pages/success');
             return;
         }
     } catch (err) {
